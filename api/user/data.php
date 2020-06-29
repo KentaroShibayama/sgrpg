@@ -23,9 +23,8 @@ if( ($uid === null) || (!is_numeric($uid)) ){
 //-------------------------------------------------
 // 準備
 //-------------------------------------------------
-$dsn  = 'mysql:dbname=sgrpg;host=127.0.0.1';  // 接続先を定義
-$user = 'senpai';      // MySQLのユーザーID
-$pw   = 'indocurry';   // MySQLのパスワード
+require_once("../util.php");
+
 
 // 実行したいSQL
 $sql = 'SELECT * FROM User WHERE id=:id';  // Userテーブルの指定列を取得
@@ -35,6 +34,10 @@ $sql = 'SELECT * FROM User WHERE id=:id';  // Userテーブルの指定列を取
 // SQLを実行
 //-------------------------------------------------
 try{
+  $dsn = Define::$dsn;
+  $user = Define::$user;
+  $pw = Define::$pw;
+  
   $dbh = new PDO($dsn, $user, $pw);   // 接続
   $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);  // エラーモード
   $sth = $dbh->prepare($sql);         // SQL準備
